@@ -1,10 +1,17 @@
 <template>
-  <div class="flex w-full items-center justify-center">
+  <div class="flex w-full items-center">
     <label
       for="dropzone-file"
-      class="dark:hover:bg-bray-800 flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-100 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+      :class="{
+        'cursor-pointer': type === 'button',
+        'dark:hover:bg-bray-800 flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-100 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600':
+          type === 'div',
+      }"
     >
-      <div class="flex flex-col items-center justify-center pt-5 pb-6">
+      <div
+        v-if="type === 'div'"
+        class="flex flex-col items-center justify-center pt-5 pb-6"
+      >
         <svg
           aria-hidden="true"
           class="mb-3 h-10 w-10 text-gray-400"
@@ -27,21 +34,80 @@
           Audio and Video (MAX. 50MB)
         </p>
       </div>
+
+      <div v-if="type === 'button'" class="choose-button group">
+        <span
+          class="relative rounded-md bg-white px-5 py-2.5 transition-all duration-75 ease-in group-hover:bg-opacity-0 dark:bg-gray-900"
+        >
+          Choose Files
+        </span>
+      </div>
+
       <input
         id="dropzone-file"
         type="file"
         class="hidden"
+        multiple
+        accept=".mp3,audio/*,video/*"
         @change="onFileChoose"
+        ref="filesRef"
       />
     </label>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+
+defineProps<{
+  type: "button" | "div";
+}>();
 const emit = defineEmits(["file-added"]);
 
-const onFileChoose = (file: Event) => {
-  console.log(file);
-  emit('file-added')
+const filesRef = ref<any>();
+
+const onFileChoose = (event: Event) => {
+  const { files }: { files: File[] } = filesRef.value;
+  console.log(files.length);
+  for (let i = 0; i < files.length; i++) {
+    addFileToList(files[i]);
+  }
+};
+
+const addFileToList = (file: File) => {
+  emit("file-added", {
+    file,
+    name: file.name,
+    size: file.size,
+    type: file.type,
+  });
 };
 </script>
+
+<style>
+.choose-button {
+  @apply relative;
+  @apply mb-2;
+  @apply mr-2;
+  @apply inline-flex;
+  @apply items-center;
+  @apply justify-center;
+  @apply overflow-hidden;
+  @apply rounded-lg;
+  @apply bg-gradient-to-br;
+  @apply from-purple-600;
+  @apply to-blue-500;
+  @apply p-0.5;
+  @apply text-sm;
+  @apply font-medium;
+  @apply text-gray-900;
+  @apply hover:text-white;
+  @apply focus:outline-none;
+  @apply focus:ring-4;
+  @apply focus:ring-blue-300;
+  @apply group-hover:from-purple-600;
+  @apply group-hover:to-blue-500;
+  @apply dark:text-white;
+  @apply dark:focus:ring-blue-800;
+}
+</style>

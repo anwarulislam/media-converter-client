@@ -1,6 +1,10 @@
 <template>
   <div class="container mx-auto py-10 px-4">
-    <ChooseFile v-if="!files.length" class="mb-5" @file-added="addFile" />
+    <ChooseFile
+      :type="files.length ? 'button' : 'div'"
+      class="mb-5"
+      @file-added="addFile"
+    />
     <FileLists v-if="files.length" :files="files" />
   </div>
 </template>
@@ -14,11 +18,6 @@ import { FileType } from "./types";
 const files = ref<FileType[]>([]);
 
 const addFile = (file: FileType) => {
-  files.value.push({
-    name: 'file.name',
-    type: 'file.type',
-    size: 122656,
-    url: 'file.url',
-  })
+  files.value.push(file);
 };
 </script>

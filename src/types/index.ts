@@ -3,4 +3,5 @@ export type FileType = {
     type: string;
     url?: string;
     size: number;
+    file?: File;
 }
