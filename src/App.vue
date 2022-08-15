@@ -12,8 +12,9 @@
 
     <button
       v-if="files.length"
+      @click="convert()"
       type="button"
-      class="flex ml-auto items-center rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      class="ml-auto flex items-center rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
     >
       Convert
       <svg
@@ -44,6 +45,26 @@ const files = ref<FileType[]>([]);
 const addFile = (file: FileType) => {
   localStorage.setItem("name", file.name);
   files.value.push(file);
+};
+
+const convert = () => {
+  if (!files.value.length) return;
+
+  console.log("converting");
+
+  const payload = new FormData();
+
+  const file = files.value[0]?.file;
+
+  payload.append("media", file as File);
+  payload.append("formatTo", "mp3");
+
+  fetch("http://localhost:3000/convert", {
+    method: "post",
+    body: payload,
+  }).then((res) => {
+    console.log(res);
+  });
 };
 </script>
 
