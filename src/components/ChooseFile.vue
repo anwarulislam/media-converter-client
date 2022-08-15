@@ -76,6 +76,7 @@ const onFileChoose = (event: Event) => {
 
 const addFileToList = (file: File) => {
   emit("file-added", {
+    id: Date.now(),
     file,
     name: file.name,
     size: file.size,

@@ -7,7 +7,13 @@
     />
 
     <div class="file-list mb-5" v-if="files.length">
-      <File v-for="file in files" :key="file.name" :file="file" />
+      <File
+        v-for="file in files"
+        :key="file.id"
+        :file="file"
+        @change-format="changeFormat(file, $event)"
+        @remove-file="removeFile"
+      />
     </div>
 
     <button
@@ -43,8 +49,20 @@ import { FileType } from "./types";
 const files = ref<FileType[]>([]);
 
 const addFile = (file: FileType) => {
-  localStorage.setItem("name", file.name);
   files.value.push(file);
+};
+
+const removeFile = (file: FileType) => {
+  files.value = files.value.filter((f) => f.id !== file.id);
+};
+
+const changeFormat = (file: FileType, format: string) => {
+  files.value = files.value.map((f) => {
+    if (f.id === file.id) {
+      return { ...f, convertTo: format };
+    }
+    return f;
+  });
 };
 
 const convert = () => {
