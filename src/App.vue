@@ -77,7 +77,7 @@ const convert = () => {
   payload.append("media", file as File);
   payload.append("formatTo", "mp3");
 
-  fetch("http://localhost:3000/convert", {
+  fetch("http://ec2-184-72-136-17.compute-1.amazonaws.com/convert", {
     method: "post",
     body: payload,
   }).then((res) => {
