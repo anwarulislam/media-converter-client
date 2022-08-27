@@ -6,10 +6,29 @@
       <p>{{ file.type }}</p>
 
       <select @change="onFormatChange">
-        <option value="mp3">mp3</option>
-        <option value="wav">wav</option>
-        <option value="ogg">ogg</option>
-        <option value="flac">flac</option>
+        <optgroup label="Video">
+          <option value="avi">avi</option>
+          <option value="flv">flv</option>
+          <option value="webm">webm</option>
+          <option value="3gp">3gp</option>
+          <option value="mkv">mkv</option>
+          <option value="mp4">mp4</option>
+          <option value="ogv">ogv</option>
+          <option value="mov">mov</option>
+          <option value="wmv">wmv</option>
+        </optgroup>
+        <optgroup label="Audio">
+          <option value="flac">flac</option>
+          <option value="aiff">aiff</option>
+          <option value="alac">alac</option>
+          <option value="mp3">mp3</option>
+          <option value="m4a">m4a</option>
+          <option value="ogg">ogg</option>
+          <option value="wav">wav</option>
+          <option value="amr">amr</option>
+          <option value="wma">wma</option>
+          <option value="aac">aac</option>
+        </optgroup>
       </select>
 
       <button @click="removeFile(file)">
