@@ -140,10 +140,10 @@ const convert = () => {
 
   const payload = new FormData();
 
-  const file = files.value[0]?.file;
+  const { file, convertTo } = files.value[0];
 
   payload.append("media", file as File);
-  payload.append("formatTo", "mp3");
+  payload.append("formatTo", convertTo as string);
 
   status.value = "uploading";
   axios
