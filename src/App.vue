@@ -36,7 +36,7 @@
               class="loader rounded-full bg-blue-600 p-0.5 text-center text-xs font-medium leading-none text-blue-100"
               :style="{ width: uploadProgress + '%' }"
             >
-              {{ uploadProgress > 5 ?? uploadProgress + "%" }}
+              {{ uploadProgress > 5 ? uploadProgress + "%" : "" }}
             </div>
           </div>
         </div>
@@ -106,7 +106,10 @@ import ChooseFile from "./components/ChooseFile.vue";
 import File from "./components/File.vue";
 import { FileType } from "./types";
 import axios from "axios";
+import Toastify from "toastify-js";
 
+const MAX_FILE_SIZE = 15 * 1024 * 1024; // 500MB
+const MAX_FILE_COUNT = 3;
 const BASE_URL = "http://ec2-184-72-136-17.compute-1.amazonaws.com";
 
 const files = ref<FileType[]>([]);
@@ -117,6 +120,13 @@ const uploadProgress = ref<number>(0);
 const downloadUrl = ref<string>("");
 
 const addFile = (file: FileType) => {
+  if (isLimitExceeded([...files.value, file])) {
+    Toastify({
+      text: "File limit exceeded. Max 3 files and 500MB allowed.",
+      duration: 3000,
+    }).showToast();
+    return;
+  }
   files.value.push(file);
 };
 
@@ -131,6 +141,14 @@ const changeFormat = (file: FileType, format: string) => {
     }
     return f;
   });
+};
+
+const isLimitExceeded = (files: FileType[]) => {
+  const isCountExceeded = files.length > MAX_FILE_COUNT;
+  const isSizeExceeded =
+    files.reduce((acc, file) => acc + file.size, 0) >= MAX_FILE_SIZE;
+
+  return isCountExceeded || isSizeExceeded;
 };
 
 const convert = () => {

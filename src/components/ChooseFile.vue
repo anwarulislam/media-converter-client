@@ -31,7 +31,7 @@
           <span class="font-semibold">Click to upload</span> or drag and drop
         </p>
         <p class="text-xs text-gray-500 dark:text-gray-400">
-          Audio and Video (MAX. 50MB)
+          Audio and Video (MAX. 500MB)
         </p>
       </div>
 
