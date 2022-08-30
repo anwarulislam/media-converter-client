@@ -98,19 +98,36 @@
       </button>
     </div>
   </div>
+
+  <button @click="showModal = !showModal">showmodal</button>
+
+  <transition name="modal">
+    <Modal v-if="showModal" @close="showModal = false">
+      <!--
+        you can use custom content here to overwrite
+        default content
+      -->
+      <template v-slot:header>
+        <h3>custom header</h3>
+      </template>
+    </Modal>
+  </transition>
 </template>
 
 <script setup lang="ts">
 import { ref } from "@vue/reactivity";
 import ChooseFile from "./components/ChooseFile.vue";
+import Modal from "./components/Modal.vue";
 import File from "./components/File.vue";
 import { FileType } from "./types";
 import axios from "axios";
-import Toastify from "toastify-js";
+import { injectAssets } from "./helpers";
+injectAssets();
 
 const MAX_FILE_SIZE = 15 * 1024 * 1024; // 500MB
 const MAX_FILE_COUNT = 3;
-const BASE_URL = "http://ec2-184-72-136-17.compute-1.amazonaws.com";
+// const BASE_URL = "http://ec2-184-72-136-17.compute-1.amazonaws.com";
+const BASE_URL = "http://localhost:3000";
 
 const files = ref<FileType[]>([]);
 const status = ref<"uploading" | "processing" | "done" | "starting">(
@@ -118,6 +135,8 @@ const status = ref<"uploading" | "processing" | "done" | "starting">(
 );
 const uploadProgress = ref<number>(0);
 const downloadUrl = ref<string>("");
+
+const showModal = ref(false);
 
 const addFile = (file: FileType) => {
   if (isLimitExceeded([...files.value, file])) {
