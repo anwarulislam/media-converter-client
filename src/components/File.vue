@@ -5,7 +5,7 @@
       <p>{{ hrFileSize(file.size) }}</p>
       <p>{{ file.type }}</p>
 
-      <select @change="onFormatChange">
+      <select v-model="formatTo">
         <optgroup label="Video">
           <option value="avi">avi</option>
           <option value="flv">flv</option>
@@ -55,6 +55,7 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref, watch } from "vue";
 import { hrFileSize } from "../helpers/human-readable-size";
 import { FileType } from "./../types/index";
 
@@ -64,9 +65,18 @@ defineProps<{
 
 const emit = defineEmits(["change-format", "remove-file"]);
 
-const onFormatChange = (e: Event) => {
-  const target = e.target as HTMLSelectElement;
-  const format = target.value;
+const formatTo = ref("flv");
+
+watch(formatTo, (value) => {
+  value && onFormatChange(value);
+});
+
+onMounted(() => {
+  onFormatChange(formatTo.value);
+});
+
+const onFormatChange = (format: string) => {
+  console.log(format);
   emit("change-format", format);
 };
 
