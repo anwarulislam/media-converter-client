@@ -185,6 +185,7 @@ const convert = () => {
   status.value = "uploading";
   axios
     .post(BASE_URL + "/convert", payload, {
+      withCredentials: true,
       onUploadProgress: (progressEvent) => {
         const { loaded, total } = progressEvent;
         const percent = Math.round((loaded * 100) / total);
