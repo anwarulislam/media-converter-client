@@ -166,7 +166,7 @@ const isLimitExceeded = (files: FileType[]) => {
   return isCountExceeded || isSizeExceeded;
 };
 
-const convert = () => {
+const convert = async () => {
   if (!files.value.length || status.value !== "starting") return;
 
   console.log("converting");
@@ -182,8 +182,11 @@ const convert = () => {
   // payload.append("formatTo", convertTo as string);
 
   status.value = "uploading";
+
+  const { data: uploadData } = await axios.post(`${BASE_URL}/upload`, {});
+
   axios
-    .post(BASE_URL + "/convert", payload, {
+    .post(`${BASE_URL}/convert/${uploadData.id}`, payload, {
       withCredentials: true,
       onUploadProgress: (progressEvent) => {
         const { loaded, total } = progressEvent;
