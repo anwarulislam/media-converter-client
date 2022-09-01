@@ -103,12 +103,8 @@
 
   <transition name="modal">
     <Modal v-if="showModal" @close="showModal = false">
-      <!--
-        you can use custom content here to overwrite
-        default content
-      -->
-      <template v-slot:header>
-        <h3>custom header</h3>
+      <template v-slot:body>
+        <h1>Premium Fetaure</h1>
       </template>
     </Modal>
   </transition>
@@ -177,10 +173,13 @@ const convert = () => {
 
   const payload = new FormData();
 
-  const { file, convertTo } = files.value[0];
+  files.value.forEach(({ file, convertTo }) => {
+    payload.append("media", file as File);
+    payload.append("formatTo", convertTo as string);
+  });
 
-  payload.append("media", file as File);
-  payload.append("formatTo", convertTo as string);
+  // payload.append("media", file as File);
+  // payload.append("formatTo", convertTo as string);
 
   status.value = "uploading";
   axios
@@ -215,7 +214,7 @@ const isFileReadyPing = (url: string): Promise<string> => {
           resolve(data.download_url);
         }
       });
-    }, 500);
+    }, 1000);
   });
 };
 
