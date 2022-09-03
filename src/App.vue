@@ -3,6 +3,7 @@
     <ChooseFile
       :type="files.length ? 'button' : 'div'"
       class="mb-5"
+      :class="{ invisible: status !== 'starting' }"
       @file-added="addFile"
     />
 
@@ -36,7 +37,7 @@
               class="loader rounded-full bg-blue-600 p-0.5 text-center text-xs font-medium leading-none text-blue-100"
               :style="{ width: uploadProgress + '%' }"
             >
-              {{ uploadProgress > 5 ? uploadProgress + "%" : "" }}
+              {{ uploadProgress + "%" }}
             </div>
           </div>
         </div>
@@ -99,12 +100,11 @@
     </div>
   </div>
 
-  <button @click="showModal = !showModal">showmodal</button>
-
   <transition name="modal">
     <Modal v-if="showModal" @close="showModal = false">
       <template v-slot:body>
-        <h1>Premium Fetaure</h1>
+        <h1 class="text-lg font-semibold">Premium Fetaure</h1>
+        <p>You cannot convert more than 3 files in a same day for free</p>
       </template>
     </Modal>
   </transition>
@@ -120,7 +120,7 @@ import axios from "axios";
 import { injectAssets } from "./helpers";
 injectAssets();
 
-const MAX_FILE_SIZE = 15 * 1024 * 1024; // 500MB
+const MAX_FILE_SIZE = 500 * 1024 * 1024; // 500MB
 const MAX_FILE_COUNT = 3;
 const BASE_URL = "http://ec2-184-72-136-17.compute-1.amazonaws.com";
 // const BASE_URL = "http://localhost:3000";
@@ -160,17 +160,22 @@ const changeFormat = (file: FileType, format: string) => {
 
 const isLimitExceeded = (files: FileType[]) => {
   const isCountExceeded = files.length > MAX_FILE_COUNT;
-  const isSizeExceeded =
-    files.reduce((acc, file) => acc + file.size, 0) >= MAX_FILE_SIZE;
+  // const isSizeExceeded =
+  //   files.reduce((acc, file) => acc + file.size, 0) >= MAX_FILE_SIZE;
+
+  let isSizeExceeded = false;
+
+  files.forEach((file) => {
+    if (file.size > MAX_FILE_SIZE) {
+      isSizeExceeded = true;
+    }
+  });
 
   return isCountExceeded || isSizeExceeded;
 };
 
 const convert = async () => {
   if (!files.value.length || status.value !== "starting") return;
-
-  console.log("converting");
-
   const payload = new FormData();
 
   files.value.forEach(({ file, convertTo }) => {
@@ -178,32 +183,36 @@ const convert = async () => {
     payload.append("formatTo", convertTo as string);
   });
 
-  // payload.append("media", file as File);
-  // payload.append("formatTo", convertTo as string);
-
-  status.value = "uploading";
-
-  const { data: uploadData } = await axios.post(`${BASE_URL}/upload`, {});
-
   axios
-    .post(`${BASE_URL}/convert/${uploadData.id}`, payload, {
-      withCredentials: true,
-      onUploadProgress: (progressEvent) => {
-        const { loaded, total } = progressEvent;
-        const percent = Math.round((loaded * 100) / total);
+    .post(`${BASE_URL}/upload`, {}, { withCredentials: true })
+    .then(({ data: uploadData }) => {
+      status.value = "uploading";
+      axios
+        .post(`${BASE_URL}/convert/${uploadData.id}`, payload, {
+          withCredentials: true,
+          onUploadProgress: (progressEvent) => {
+            const { loaded, total } = progressEvent;
+            const percent = Math.round((loaded * 100) / total);
 
-        uploadProgress.value = percent;
-        console.log(percent);
-      },
+            uploadProgress.value = percent;
+            console.log(percent);
+          },
+        })
+        .then(({ data }) => {
+          status.value = "processing";
+
+          isFileReadyPing(data.ping_url).then((url) => {
+            console.log("file ready", url);
+            status.value = "done";
+            downloadUrl.value = url;
+          });
+        });
     })
-    .then(({ data }) => {
-      status.value = "processing";
-
-      isFileReadyPing(data.ping_url).then((url) => {
-        console.log("file ready", url);
-        status.value = "done";
-        downloadUrl.value = url;
-      });
+    .catch((err) => {
+      const { response } = err;
+      if (response.status === 400) {
+        showModal.value = true;
+      }
     });
 };
 
