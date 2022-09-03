@@ -10,7 +10,7 @@
           <option value="avi">avi</option>
           <option value="flv">flv</option>
           <option value="webm">webm</option>
-          <option value="3gp">3gp</option>
+          <!-- <option value="3gp">3gp</option> -->
           <option value="mkv">mkv</option>
           <option value="mp4">mp4</option>
           <option value="ogv">ogv</option>
