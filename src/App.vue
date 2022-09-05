@@ -219,7 +219,7 @@ const convert = async () => {
 const isFileReadyPing = (url: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     const interval = setInterval(() => {
-      axios.get(url).then(({ data }) => {
+      axios.post(url, { nof: files.value.length }).then(({ data }) => {
         if (data.status === "ready") {
           clearInterval(interval);
           console.log("done", data);
