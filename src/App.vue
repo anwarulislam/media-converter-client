@@ -122,7 +122,7 @@ injectAssets();
 
 const MAX_FILE_SIZE = 500 * 1024 * 1024; // 500MB
 const MAX_FILE_COUNT = 3;
-const BASE_URL = "https://convert.mediau.io";
+const BASE_URL = "https://convert.7-cats.com";
 // const BASE_URL = "http://localhost:3000";
 
 const files = ref<FileType[]>([]);
