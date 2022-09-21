@@ -12,6 +12,7 @@
         v-for="file in files"
         :key="file.id"
         :file="file"
+        :show-close-btn="status === 'starting'"
         @change-format="changeFormat(file, $event)"
         @remove-file="removeFile"
       />

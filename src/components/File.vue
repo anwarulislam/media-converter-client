@@ -31,7 +31,7 @@
         </optgroup>
       </select>
 
-      <button @click="removeFile(file)">
+      <button v-if="showCloseBtn" @click="removeFile(file)">
         <svg
           data-v-4f42a8f0=""
           xmlns="http://www.w3.org/2000/svg"
@@ -61,6 +61,7 @@ import { FileType } from "./../types/index";
 
 defineProps<{
   file: FileType;
+  showCloseBtn: boolean;
 }>();
 
 const emit = defineEmits(["change-format", "remove-file"]);
