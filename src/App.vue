@@ -185,7 +185,11 @@ const convert = async () => {
   });
 
   axios
-    .post(`${BASE_URL}/upload`, {}, { withCredentials: true })
+    .post(
+      `${BASE_URL}/upload`,
+      { totalFiles: files.value.length },
+      { withCredentials: true }
+    )
     .then(({ data: uploadData }) => {
       status.value = "uploading";
       axios
