@@ -2,10 +2,14 @@
   <div class="flex w-full items-center">
     <label
       for="dropzone-file"
+      @drop.prevent="dropHandler"
+      @dragover.prevent="dragoverHandler('dragover')"
+      @dragleave.prevent="dragoverHandler('dragleave')"
       :class="{
         'cursor-pointer': type === 'button',
         'dark:hover:bg-bray-800 flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-100 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600':
           type === 'div',
+        dragover: isDragging,
       }"
     >
       <div
@@ -64,7 +68,21 @@ defineProps<{
 }>();
 const emit = defineEmits(["file-added"]);
 
+const isDragging = ref(false);
 const filesRef = ref<any>();
+
+const dragoverHandler = (type: "dragover" | "dragleave") => {
+  isDragging.value = type === "dragover" ? true : false;
+  console.log(isDragging.value);
+};
+
+const dropHandler = (event: DragEvent) => {
+  isDragging.value = false;
+  const files = event.dataTransfer?.files || [];
+  for (let i = 0; i < files.length; i++) {
+    addFileToList(files[i]);
+  }
+};
 
 const onFileChoose = (event: Event) => {
   const { files }: { files: File[] } = filesRef.value;
@@ -110,5 +128,13 @@ const addFileToList = (file: File) => {
   @apply group-hover:to-blue-500;
   @apply dark:text-white;
   @apply dark:focus:ring-blue-800;
+}
+
+.dragover {
+  @apply border-2;
+  @apply border-inherit;
+  @apply bg-gray-300;
+  @apply border-green-600;
+  border-style: inherit !important;
 }
 </style>
