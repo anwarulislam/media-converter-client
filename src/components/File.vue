@@ -5,7 +5,7 @@
       <p>{{ hrFileSize(file.size) }}</p>
       <p>{{ file.type }}</p>
 
-      <select v-model="formatTo">
+      <select v-model="formatTo" :disabled="!showCloseBtn">
         <!-- <optgroup label="Video">
           <option value="avi">avi</option>
           <option value="flv">flv</option>
@@ -18,16 +18,16 @@
           <option value="wmv">wmv</option>
         </optgroup> -->
         <optgroup label="Audio">
-          <option value="flac">flac</option>
-          <option value="aiff">aiff</option>
-          <option value="alac">alac</option>
-          <option value="mp3">mp3</option>
-          <option value="m4a">m4a</option>
-          <option value="ogg">ogg</option>
-          <option value="wav">wav</option>
-          <option value="amr">amr</option>
-          <option value="wma">wma</option>
-          <option value="aac">aac</option>
+          <option value="flac">FLAC</option>
+          <option value="aiff">AIFF</option>
+          <option value="alac">ALAC</option>
+          <option value="mp3">MP3</option>
+          <option value="m4a">M4a</option>
+          <option value="ogg">OGG</option>
+          <option value="wav">WAV</option>
+          <option value="amr">AMR</option>
+          <option value="wma">WMA</option>
+          <option value="aac">AAC</option>
         </optgroup>
       </select>
 
