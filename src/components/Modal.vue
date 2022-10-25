@@ -63,8 +63,8 @@
 
 .modal-default-button {
   position: absolute;
-  top: .8rem;
-  right: .8rem;
+  top: 0.8rem;
+  right: 0.8rem;
 }
 
 /*

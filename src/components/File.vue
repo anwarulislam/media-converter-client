@@ -1,7 +1,7 @@
 <template>
-  <div class="file-list-item grid grid-cols-2 gap-5">
-    <div class="truncate">{{ file.name }}</div>
-    <div class="flex justify-between gap-4">
+  <div class="file-list-item x-grid x-grid-cols-2 x-gap-5">
+    <div class="x-truncate">{{ file.name }}</div>
+    <div class="x-flex x-justify-between x-gap-4">
       <p>{{ hrFileSize(file.size) }}</p>
       <p>{{ file.type }}</p>
 
@@ -43,7 +43,7 @@
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="feather feather-x-circle"
+          class="x-feather x-feather-x-circle"
         >
           <circle data-v-4f42a8f0="" cx="12" cy="12" r="10"></circle>
           <line data-v-4f42a8f0="" x1="15" y1="9" x2="9" y2="15"></line>

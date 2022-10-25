@@ -1,13 +1,13 @@
 <template>
-  <div class="container mx-auto py-10 px-4">
+  <div class="x-container x-mx-auto x-py-10 x-px-4">
     <ChooseFile
       :type="files.length ? 'button' : 'div'"
-      class="mb-5"
+      class="x-mb-5"
       :class="{ invisible: status !== 'starting' }"
       @file-added="addFile"
     />
 
-    <div class="file-list mb-5" v-if="files.length">
+    <div class="file-list x-mb-5" v-if="files.length">
       <File
         v-for="file in files"
         :key="file.id"
@@ -18,24 +18,24 @@
       />
     </div>
 
-    <div class="flex items-center justify-between gap-16">
-      <div class="flex-1">
+    <div class="x-flex x-items-center x-justify-between x-gap-16">
+      <div class="x-flex-1">
         <strong
           v-if="status === 'processing'"
-          class="min-w-[6rem] text-green-600"
+          class="x-min-w-[6rem] x-text-green-600"
         >
           Processing...
         </strong>
 
         <div
-          class="flex w-full items-center gap-5"
+          class="x-flex x-w-full x-items-center x-gap-5"
           v-if="status === 'uploading'"
         >
-          <strong class="min-w-[6rem]"> Uploading </strong>
+          <strong class="x-min-w-[6rem]"> Uploading </strong>
 
-          <div class="flex-1 rounded-full bg-gray-200 dark:bg-gray-700">
+          <div class="x-flex-1 x-rounded-full x-bg-gray-200 dark:x-bg-gray-700">
             <div
-              class="loader rounded-full bg-blue-600 p-0.5 text-center text-xs font-medium leading-none text-blue-100"
+              class="loader x-rounded-full x-bg-blue-600 x-p-0.5 x-text-center x-text-xs x-font-medium x-leading-none x-text-blue-100"
               :style="{ width: uploadProgress + '%' }"
             >
               {{ uploadProgress + "%" }}
@@ -62,7 +62,7 @@
         <template v-if="status === 'uploading' || status === 'processing'">
           <svg
             role="status"
-            class="mr-3 inline h-4 w-4 animate-spin text-white"
+            class="x-mr-3 x-inline x-h-4 x-w-4 x-animate-spin x-text-white"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +85,7 @@
           Convert
           <svg
             aria-hidden="true"
-            class="ml-2 -mr-1 h-5 w-5"
+            class="x-ml-2 -x-mr-1 x-h-5 x-w-5"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -104,7 +104,7 @@
   <transition name="modal">
     <Modal v-if="showModal" @close="showModal = false">
       <template v-slot:body>
-        <h1 class="text-lg font-semibold">Premium Fetaure</h1>
+        <h1 class="x-text-lg x-font-semibold">Premium Fetaure</h1>
         <p>You cannot convert more than 3 files in a same day for free</p>
       </template>
     </Modal>
@@ -245,59 +245,59 @@ const download = (url: string) => {
 
 <style scoped>
 .file-list {
-  @apply border;
-  @apply border-gray-200;
-  @apply bg-white;
-  @apply font-medium;
-  @apply text-gray-900;
-  @apply dark:border-gray-600;
-  @apply dark:bg-gray-700;
-  @apply dark:text-white;
+  @apply x-border;
+  @apply x-border-gray-200;
+  @apply x-bg-white;
+  @apply x-font-medium;
+  @apply x-text-gray-900;
+  @apply dark:x-border-gray-600;
+  @apply dark:x-bg-gray-700;
+  @apply dark:x-text-white;
 }
 .file-list .file-list-item {
-  @apply w-full;
-  @apply border-gray-200;
-  @apply py-5;
-  @apply px-5;
-  @apply dark:border-gray-600;
+  @apply x-w-full;
+  @apply x-border-gray-200;
+  @apply x-py-5;
+  @apply x-px-5;
+  @apply dark:x-border-gray-600;
 }
 
 .file-list .file-list-item:not(:last-child) {
-  @apply border-b;
+  @apply x-border-b;
 }
 
 .button {
-  @apply inline-flex;
-  @apply min-w-[10rem];
-  @apply items-center;
-  @apply justify-center;
-  @apply rounded-lg;
-  @apply bg-blue-700;
-  @apply px-5;
-  @apply py-2.5;
-  @apply text-center;
-  @apply text-sm;
-  @apply font-medium;
-  @apply text-white;
-  @apply hover:bg-blue-800;
-  @apply focus:outline-none;
-  @apply focus:ring-4;
-  @apply focus:ring-blue-300;
-  @apply dark:bg-blue-600;
-  @apply dark:hover:bg-blue-700;
-  @apply dark:focus:ring-blue-800;
+  @apply x-inline-flex;
+  @apply x-min-w-[10rem];
+  @apply x-items-center;
+  @apply x-justify-center;
+  @apply x-rounded-lg;
+  @apply x-bg-blue-700;
+  @apply x-px-5;
+  @apply x-py-2.5;
+  @apply x-text-center;
+  @apply x-text-sm;
+  @apply x-font-medium;
+  @apply x-text-white;
+  @apply hover:x-bg-blue-800;
+  @apply focus:x-outline-none;
+  @apply focus:x-ring-4;
+  @apply focus:x-ring-blue-300;
+  @apply dark:x-bg-blue-600;
+  @apply dark:hover:x-bg-blue-700;
+  @apply dark:focus:x-ring-blue-800;
 }
 
 .outlined {
-  @apply outline;
-  @apply outline-2;
-  @apply outline-offset-[-1.5px];
-  @apply bg-transparent;
-  @apply outline-blue-700;
-  @apply text-blue-700;
-  @apply dark:outline-blue-600;
-  @apply hover:bg-blue-700;
-  @apply hover:text-white;
+  @apply x-outline;
+  @apply x-outline-2;
+  @apply x-outline-offset-[-1.5px];
+  @apply x-bg-transparent;
+  @apply x-outline-blue-700;
+  @apply x-text-blue-700;
+  @apply dark:x-outline-blue-600;
+  @apply hover:x-bg-blue-700;
+  @apply hover:x-text-white;
 }
 
 .loader {
