@@ -39,11 +39,15 @@
         </p>
       </div>
 
-      <div v-if="type === 'button'" class="choose-button group">
+      <div v-if="type === 'button'">
         <span
-          class="x-relative x-rounded-md x-bg-white x-px-5 x-py-2.5 x-transition-all x-duration-75 x-ease-in group-hover:x-bg-opacity-0 dark:x-bg-gray-900"
+          class="x-inline-flex x-cursor-pointer x-items-center x-rounded x-border-none x-bg-gray-300 x-py-2 x-px-4 x-font-bold x-text-gray-800 hover:x-bg-gray-400"
         >
-          Choose Files
+          <img
+            src="https://img.icons8.com/ios/72/plus-key.png"
+            class="x-mr-3 x-h-4"
+          />
+          <span>Choose Files</span>
         </span>
       </div>
 
@@ -103,33 +107,7 @@ const addFileToList = (file: File) => {
 };
 </script>
 
-<style>
-.choose-button {
-  @apply x-relative;
-  @apply x-mb-2;
-  @apply x-mr-2;
-  @apply x-inline-flex;
-  @apply x-items-center;
-  @apply x-justify-center;
-  @apply x-overflow-hidden;
-  @apply x-rounded-lg;
-  @apply x-bg-gradient-to-br;
-  @apply x-from-purple-600;
-  @apply x-to-blue-500;
-  @apply x-p-0.5;
-  @apply x-text-sm;
-  @apply x-font-medium;
-  @apply x-text-gray-900;
-  @apply hover:x-text-white;
-  @apply focus:x-outline-none;
-  @apply focus:x-ring-4;
-  @apply focus:x-ring-blue-300;
-  @apply group-hover:x-from-purple-600;
-  @apply group-hover:x-to-blue-500;
-  @apply dark:x-text-white;
-  @apply dark:focus:x-ring-blue-800;
-}
-
+<style scoped>
 .dragover {
   @apply x-border-2;
   @apply x-border-inherit;

@@ -46,7 +46,7 @@
         <a
           v-if="status === 'done'"
           href=""
-          class="button outlined"
+          class="x-button outlined"
           target="_blank"
         >
           Convert more files
@@ -57,7 +57,7 @@
         v-if="files.length"
         @click="status === 'done' ? download(downloadUrl) : convert()"
         type="button"
-        class="button"
+        class="x-button"
       >
         <template v-if="status === 'uploading' || status === 'processing'">
           <svg
@@ -244,29 +244,7 @@ const download = (url: string) => {
 </script>
 
 <style scoped>
-.file-list {
-  @apply x-border;
-  @apply x-border-gray-200;
-  @apply x-bg-white;
-  @apply x-font-medium;
-  @apply x-text-gray-900;
-  @apply dark:x-border-gray-600;
-  @apply dark:x-bg-gray-700;
-  @apply dark:x-text-white;
-}
-.file-list .file-list-item {
-  @apply x-w-full;
-  @apply x-border-gray-200;
-  @apply x-py-5;
-  @apply x-px-5;
-  @apply dark:x-border-gray-600;
-}
-
-.file-list .file-list-item:not(:last-child) {
-  @apply x-border-b;
-}
-
-.button {
+.x-button {
   @apply x-inline-flex;
   @apply x-min-w-[10rem];
   @apply x-items-center;
@@ -286,6 +264,7 @@ const download = (url: string) => {
   @apply dark:x-bg-blue-600;
   @apply dark:hover:x-bg-blue-700;
   @apply dark:focus:x-ring-blue-800;
+  border: none;
 }
 
 .outlined {
