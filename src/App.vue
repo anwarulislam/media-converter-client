@@ -104,8 +104,13 @@
   <transition name="modal">
     <Modal v-if="showModal" @close="showModal = false">
       <template v-slot:body>
-        <h1 class="x-text-lg x-font-semibold">Premium Fetaure</h1>
-        <p>You cannot convert more than 3 files in a same day for free</p>
+        <div>
+          <h1 class="x-text-lg x-font-semibold">Premium Fetaure</h1>
+          <p>You cannot convert more than 3 files in a same day for free</p>
+        </div>
+        <a :href="settings.link">
+          <img :src="BASE_URL + settings.promoImage" />
+        </a>
       </template>
     </Modal>
   </transition>
@@ -133,7 +138,9 @@ const status = ref<"uploading" | "processing" | "done" | "starting">(
 const uploadProgress = ref<number>(0);
 const downloadUrl = ref<string>("");
 
-const showModal = ref(false);
+const settings = ref<{ promoImage?: string; link?: string }>({});
+
+const showModal = ref(true);
 
 const addFile = (file: FileType) => {
   if (isLimitExceeded([...files.value, file])) {
@@ -174,6 +181,14 @@ const isLimitExceeded = (files: FileType[]) => {
 
   return isCountExceeded || isSizeExceeded;
 };
+
+const getSettings = () => {
+  axios.get(`${BASE_URL}/public/settings.json`).then(({ data }) => {
+    settings.value = data;
+  });
+};
+
+getSettings();
 
 const convert = async () => {
   if (!files.value.length || status.value !== "starting") return;

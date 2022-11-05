@@ -1,14 +1,10 @@
 /* @tailwind base; */
 
-body {
-  margin: 0;
-}
-
 @tailwind components;
 @tailwind utilities;
 
 #media-converter {
-  max-width: 1200px;
+  max-width: 900px;
   margin: auto;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
