@@ -140,7 +140,7 @@ const downloadUrl = ref<string>("");
 
 const settings = ref<{ promoImage?: string; link?: string }>({});
 
-const showModal = ref(true);
+const showModal = ref(false);
 
 const addFile = (file: FileType) => {
   if (isLimitExceeded([...files.value, file])) {
