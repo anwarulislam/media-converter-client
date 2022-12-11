@@ -2,9 +2,9 @@
   <div class="file-list-item">
     <div class="x-grid x-grid-cols-2 x-items-center x-gap-5 x-px-5">
       <div class="x-truncate">{{ file.name }}</div>
-      <div class="x-flex x-items-center x-justify-between x-gap-4">
-        <p>{{ hrFileSize(file.size) }}</p>
-        <p>{{ file.type }}</p>
+      <div class="x-flex x-items-center x-justify-between x-gap-4 x-py-2">
+        <p class="x-my-0">{{ hrFileSize(file.size) }}</p>
+        <p class="x-my-0">{{ file.type }}</p>
 
         <select v-model="formatTo" :disabled="!showCloseBtn">
           <!-- <optgroup label="Video">

@@ -19,7 +19,7 @@
     </div>
 
     <div class="x-flex x-items-center x-justify-between x-gap-16">
-      <div class="x-flex-1">
+      <div class="x-flex-1 x-text-left">
         <strong
           v-if="status === 'processing'"
           class="x-min-w-[6rem] x-text-green-600"
