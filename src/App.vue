@@ -183,7 +183,7 @@ const isLimitExceeded = (files: FileType[]) => {
 };
 
 const getSettings = () => {
-  axios.get(`${BASE_URL}/public/settings.json`).then(({ data }) => {
+  axios.get(`${BASE_URL}/public/settings-audio.json`).then(({ data }) => {
     settings.value = data;
   });
 };
